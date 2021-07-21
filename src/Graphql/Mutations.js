@@ -11,3 +11,12 @@ mutation Register($data : RegisterVars) {
 }
 }
 `
+
+
+export const ADD_OPERATION = gql`
+mutation AddOperation($data : OperationVars) {
+    AddOperation(data: $data){
+ _id
+}
+}
+`

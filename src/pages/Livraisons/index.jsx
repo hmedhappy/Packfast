@@ -1,97 +1,49 @@
-import React from 'react'
+import { useMutation } from '@apollo/client';
+import React, { useEffect, useState } from 'react'
+import { ADD_OPERATION } from '../../Graphql/Mutations';
+import notify from '../../utils/Notifier/Notifier';
+import InfoColis from './InfoColis'
+import { DisappearedLoading} from 'react-loadingg'
 
-export default function index() {
+
+import InfoEnlevement from './InfoEnlevement'
+import InfoLivraison from './InfoLivraison'
+
+export default function Index() {
+  const [operation, setoperation] = useState({
+    info_enlevement:{},
+    info_livraison : {},
+    info_colis : {}
+  }) ;
+
+  const [AddOperation , {loading,data}] =useMutation(ADD_OPERATION) 
+
+  
+  
+  useEffect(() => {
+    if (data?.AddOperation) {
+      if (data.AddOperation._id) {
+        notify('Votre Commande a eté enregistrer',1)
+        window.location.pathname ="/historique"
+      }else{
+        notify('Erreur Serveur')
+      }
+    }
+  }, [data])
+  if (loading) return <div style={{textAlign:"center"}}>Connexion...<DisappearedLoading style={{position:"inherit !important",margin:'auto'}}  /></div>;
     return (
         <>
           <div className="col-12">
-        {/* ORDERS TABLE */}
+          <form onSubmit={(e)=>{e.preventDefault();AddOperation({variables:{data:operation}})}} >
+
             {/* Enlevemment   */}
-        <div className="box" style={{margin:"15px"}}>
-          <div className="box-header">
-             Enlevemment
-          </div>
-          <div className="box-body overflow-scroll">
-          <form>
-  <div className="mb-3">
-    <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-    <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-  </div>
-  <div className="mb-3">
-    <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-    <input type="password" className="form-control" id="exampleInputPassword1" />
-  </div>
-  <div className="mb-3 form-check">
-    <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-    <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
-  </div>
-  <button type="submit" className="btn btn-primary">Submit</button>
-</form>
+                <InfoEnlevement operation={operation} setoperation={setoperation} />
+            {/* Livraison   */}
+                <InfoLivraison  operation={operation}  setoperation={setoperation} />
+            {/* Colis   */}
+                <InfoColis operation={operation} setoperation={setoperation}/>
 
-
-
-            </div>
-            
-        </div>
-
-          {/* Livraison   */}
-          <div className="box" style={{margin:"15px"}}>
-          <div className="box-header">
-          Livraison
-          </div>
-          <div className="box-body overflow-scroll">
-          <form>
-  <div className="mb-3">
-    <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-    <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-  </div>
-  <div className="mb-3">
-    <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-    <input type="password" className="form-control" id="exampleInputPassword1" />
-  </div>
-  <div className="mb-3 form-check">
-    <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-    <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
-  </div>
-  <button type="submit" className="btn btn-primary">Submit</button>
-</form>
-
-
-
-            </div>
-            
-        </div>
-
-        {/* Colis   */}
-        <div className="box" style={{margin:"15px"}}>
-          <div className="box-header">
-          Colis
-          </div>
-          <div className="box-body overflow-scroll">
-          <form>
-  <div className="mb-3">
-    <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-    <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-  </div>
-  <div className="mb-3">
-    <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-    <input type="password" className="form-control" id="exampleInputPassword1" />
-  </div>
-  <div className="mb-3 form-check">
-    <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-    <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
-  </div>
-  <button type="submit" className="btn btn-primary">Submit</button>
-</form>
-
-
-
-            </div>
-            
-        </div>
-        {/* END ORDERS TABLE */}
+        </form>
       </div>
        
         </>

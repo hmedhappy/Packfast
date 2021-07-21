@@ -37,3 +37,20 @@
   }
 }
  */
+
+  .menu-item
+ {
+  display: flex;
+    align-items: center;
+    justify-content: space-between;
+ }
+
+ .sidebar{
+   padding: 0 !important;
+ }
+/*
+ .menu-item > a {
+   width: 70%;
+   margin: 0;
+   padding: 0;
+ } */

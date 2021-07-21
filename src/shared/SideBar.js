@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 
 export default function SideBar() {
 
     const history = useHistory();
+    const [user, ] = useState(JSON.parse(localStorage.getItem('auth')))
 
 
     const logout = () =>{
@@ -16,7 +17,7 @@ export default function SideBar() {
     return (
         <div>
             {
-                <aside className="main-sidebar sidebar-dark-primary elevation-4">
+                <aside className="main-sidebar sidebar-dark-primary elevation-4" style={{backgroundColor: "#1E1E2D"}}>
                     <Link to="/" className="brand-link">
                     <div className="nav-item has-treeview d-flex justify-content-evenly align-items-center ">
                                     <img alt="logo" src='logo.png' width='45' style={{borderRadius:"10px"}}/>
@@ -30,7 +31,7 @@ export default function SideBar() {
                                     <Link to="#" className="nav-link">
                                         <img src={"https://gravatar.com/avatar/76a79ca27bbe07f95bb798168c6e7e1e?s=400&d=mp&r=x"} className="img-circle elevation-2" alt="UserImage" />
                                         <span className="brand-text font-weight-light" style={{marginLeft: '3%', fontSize: '18px'}}>
-                                            {"ahmed"}
+                                            {user?.email}
                                         </span>
                                         <i  onClick={()=>logout()} className="right fas fa-sign-out-alt" style={{float: 'right', marginTop: '2%',fontSize: '20px',color:'#fa4c07'}}/>
                                     </Link>
@@ -45,25 +46,39 @@ export default function SideBar() {
                                         <p>Dashboard</p>
                                     </Link>
                                 </li>
-
-                                {true && <li className="nav-item">
-                                    <Link to="/commandes" className="nav-link">
-                                        <i className="nav-icon fas fa-people-carry"></i>
-                                        <p>Livraisons</p>
-                                    </Link>
-                                </li>}
-                                <li className="nav-item">
-                                    <Link to="/historique" className="nav-link">
-                                        <i class="nav-icon fas fa-truck"/>
-                                        <p>Historique</p>
+                                <li className="nav-item ">
+                                    <Link to="/commandes" className="nav-link menu-item">
+                                        <div>
+                                        <i class="nav-icon fas fa-box-open"/>
+                                        <p>Colis</p>
+                                        </div>
+                                    <i class="fas fa-chevron-right"></i>
                                     </Link>
                                 </li>
-                                <>                              
-                                 </>
+                                <li className="nav-item ">
+                                    <Link to="/historique" className="nav-link menu-item">
+                                    <div>
+
+                                        <i class="nav-icon fas fa-truck"/>
+                                        <p>Livraisons</p>
+                                        </div>
+                                    <i class="fas fa-chevron-right"></i>
+                                    </Link>
+                                </li>
+                                <li className="nav-item ">
+                                    <Link to="/historique" className="nav-link menu-item">
+                                    <div>
+
+                                        <i class="nav-icon fas fa-map-marked-alt"/>
+                                        <p>Adresses</p>
+                                        </div>
+                                    <i class="fas fa-chevron-right"></i>
+                                    </Link>
+                                </li>
                                {true && <li className="nav-item">
                                     <Link to="/configuration" className="nav-link">
-                                    <i className="fas fa-cogs"></i>
-                                    <p>{' '}Configuration</p>
+                                    <i className="fas fa-exclamation-triangle"></i>
+                                    <p>{' '}Reclamations</p>
                                     </Link>
                                 </li>}
                             </ul>
