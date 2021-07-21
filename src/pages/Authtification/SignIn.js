@@ -24,6 +24,7 @@ export default function SignIn() {
            notify(' Mot de passe ou email Incorrect')
          }
        }
+       // eslint-disable-next-line
     }, [data])
   
     if (loading) return <div style={{textAlign:"center"}}>Connexion...<DisappearedLoading style={{position:"inherit !important",margin:'auto'}}  /></div>;
