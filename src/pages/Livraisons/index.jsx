@@ -8,6 +8,7 @@ import { DisappearedLoading} from 'react-loadingg'
 
 import InfoEnlevement from './InfoEnlevement'
 import InfoLivraison from './InfoLivraison'
+import { useHistory } from 'react-router-dom';
 
 export default function Index() {
   const [operation, setoperation] = useState({
@@ -18,13 +19,13 @@ export default function Index() {
 
   const [AddOperation , {loading,data}] =useMutation(ADD_OPERATION) 
 
-  
+  const history = useHistory()
   
   useEffect(() => {
     if (data?.AddOperation) {
       if (data.AddOperation._id) {
         notify('Votre Commande a eté enregistrer',1)
-        window.location.pathname ="/historique"
+        history.push('/historique')
       }else{
         notify('Erreur Serveur')
       }

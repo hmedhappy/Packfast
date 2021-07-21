@@ -3,12 +3,14 @@ import React, { useEffect, useState } from 'react'
 import { LOGIN } from '../../Graphql/Queries';
 import { DisappearedLoading } from 'react-loadingg';
 import notify from '../../utils/Notifier/Notifier';
+import { useHistory } from 'react-router-dom';
 
 
 export default function SignIn() {
 
     const [email, setemail] = useState("hmedd@gmail.com")
     const [password, setpassword] = useState("87654321") ;
+    const history = useHistory()
 
     const [LoginF,{ loading, data }] = useLazyQuery(LOGIN);
 
@@ -17,7 +19,7 @@ export default function SignIn() {
          if (data.Login) {
            notify(`Bienvenue ${data.Login.email} `,1);
            localStorage.setItem('auth',JSON.stringify(data.Login))
-           window.location.pathname = '/'
+           history.push('/')
            }else{
            notify(' Mot de passe ou email Incorrect')
          }
